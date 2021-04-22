@@ -6,6 +6,8 @@ export const authenticateUser = (email, password) => {
     email: email,
     password: password,
   };
+  console.log(email);
+  console.log(password);
   return (dispatch) => {
     dispatch({
       type: AT.LOGIN_REQUEST,
@@ -13,6 +15,7 @@ export const authenticateUser = (email, password) => {
     axios
       .post("http://localhost:8080/rest/user/authenticate", credentials)
       .then((response) => {
+        console.log(JSON.stringify(response));
         let token = response.data.token;
         localStorage.setItem("jwtToken", token);
         dispatch(success(true));

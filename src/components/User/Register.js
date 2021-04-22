@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { saveUser } from "../../services/index";
-import { connect } from "react-redux";
+import RegisterServices from "../../services/user/register/RegisterServices";
 
 import {
   Row,
@@ -25,8 +24,8 @@ class Register extends Component {
     super(props);
     this.state = this.initialState;
 
-    this.submitUser = this.submitUser.bind(this);
     this.userChange = this.userChange.bind(this);
+    this.submitUser = this.submitUser.bind(this);
   }
 
   initialState = {
@@ -46,27 +45,21 @@ class Register extends Component {
     this.setState(() => this.initialState);
   };
 
-  submitUser = (event) => {
-    event.preventDefault();
+  submitUser(e) {
+    e.preventDefault();
 
-    const user = {
+    let user = {
       firstname: this.state.firstname,
       lastname: this.state.lastname,
       email: this.state.email,
       password: this.state.password,
     };
+    console.log("employee => " + JSON.stringify(user));
 
-    this.props.saveUser(user);
-    setTimeout(() => {
-      if (this.props.userObject.user != null) {
-        this.setState({ show: true, method: "post" });
-        setTimeout(() => this.setState({ show: false }), 3000);
-      } else {
-        this.setState({ show: false });
-      }
-    }, 2000);
-    this.setState(this.initialState);
-  };
+    RegisterServices.createUser(user).then((res) => {
+      this.props.history.push("/dashboard");
+    });
+  }
 
   render() {
     const { firstname, email, password, lastname } = this.state;
@@ -191,16 +184,4 @@ class Register extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    userObject: state.user,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    saveUser: (user) => dispatch(saveUser(user)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Register);
+export default Register;
