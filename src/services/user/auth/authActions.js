@@ -13,7 +13,7 @@ export const authenticateUser = (email, password) => {
       type: AT.LOGIN_REQUEST,
     });
     axios
-      .post("http://localhost:8080/rest/user/authenticate", credentials)
+      .post("http://localhost:8085/user/authenticate", credentials)
       .then((response) => {
         console.log(JSON.stringify(response));
         let token = response.data.token;

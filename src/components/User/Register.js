@@ -29,8 +29,8 @@ class Register extends Component {
   }
 
   initialState = {
-    firstname: "",
-    lastname: "",
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
   };
@@ -49,20 +49,20 @@ class Register extends Component {
     e.preventDefault();
 
     let user = {
-      firstname: this.state.firstname,
-      lastname: this.state.lastname,
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
       email: this.state.email,
       password: this.state.password,
     };
-    console.log("employee => " + JSON.stringify(user));
+    console.log("user => " + JSON.stringify(user));
 
     RegisterServices.createUser(user).then((res) => {
-      this.props.history.push("/dashboard");
+      this.props.history.push("/login");
     });
   }
 
   render() {
-    const { firstname, email, password, lastname } = this.state;
+    const { firstName, email, password, lastName } = this.state;
 
     return (
       <Row className="justify-content-md-center">
@@ -83,8 +83,8 @@ class Register extends Component {
                     <FormControl
                       autoComplete="off"
                       type="text"
-                      name="firstname"
-                      value={firstname}
+                      name="firstName"
+                      value={firstName}
                       onChange={this.userChange}
                       className={"bg-dark text-white"}
                       placeholder="Enter First Name"
@@ -103,8 +103,8 @@ class Register extends Component {
                     <FormControl
                       autoComplete="off"
                       type="text"
-                      name="lastname"
-                      value={lastname}
+                      name="lastName"
+                      value={lastName}
                       onChange={this.userChange}
                       className={"bg-dark text-white"}
                       placeholder="Enter Last Name"
