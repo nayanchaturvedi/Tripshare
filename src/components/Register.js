@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
+import RegisterServices from "../services/RegisterServices";
+
 import {
   Row,
   Col,
@@ -8,63 +9,109 @@ import {
   InputGroup,
   FormControl,
   Button,
-  Alert,
 } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faSignInAlt,
   faEnvelope,
   faLock,
   faUndo,
+  faUserPlus,
+  faUser,
 } from "@fortawesome/free-solid-svg-icons";
-import { authenticateUser } from "../../services/index";
 
-class Login extends Component {
+class Register extends Component {
   constructor(props) {
     super(props);
     this.state = this.initialState;
+
+    this.userChange = this.userChange.bind(this);
+    this.submitUser = this.submitUser.bind(this);
   }
 
   initialState = {
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
-    error: "",
   };
 
-  credentialChange = (event) => {
+  userChange = (event) => {
     this.setState({
       [event.target.name]: event.target.value,
     });
   };
 
-  validateUser = () => {
-    this.props.authenticateUser(this.state.email, this.state.password);
-    setTimeout(() => {
-      if (this.props.auth.isLoggedIn) {
-        return this.props.history.push("/dashboard");
-      } else {
-        this.resetLoginForm();
-        this.setState({ error: "Invalid email and password" });
-      }
-    }, 500);
-  };
-
-  resetLoginForm = () => {
+  resetRegisterForm = () => {
     this.setState(() => this.initialState);
   };
 
+  submitUser(e) {
+    e.preventDefault();
+
+    let user = {
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      email: this.state.email,
+      password: this.state.password,
+    };
+    console.log("user => " + JSON.stringify(user));
+
+    RegisterServices.createUser(user).then((res) => {
+      this.props.history.push("/login");
+    });
+  }
+
   render() {
-    const { email, password, error } = this.state;
+    const { firstName, email, password, lastName } = this.state;
 
     return (
       <Row className="justify-content-md-center">
         <Col xs={5}>
-          {error && <Alert variant="danger">{error}</Alert>}
           <Card className={"border border-dark bg-dark text-white"}>
             <Card.Header>
-              <FontAwesomeIcon icon={faSignInAlt} /> Login
+              <FontAwesomeIcon icon={faUserPlus} /> Register
             </Card.Header>
             <Card.Body>
+              <Form.Row>
+                <Form.Group as={Col}>
+                  <InputGroup>
+                    <InputGroup.Prepend>
+                      <InputGroup.Text>
+                        <FontAwesomeIcon icon={faUser} />
+                      </InputGroup.Text>
+                    </InputGroup.Prepend>
+                    <FormControl
+                      autoComplete="off"
+                      type="text"
+                      name="firstName"
+                      value={firstName}
+                      onChange={this.userChange}
+                      className={"bg-dark text-white"}
+                      placeholder="Enter First Name"
+                    />
+                  </InputGroup>
+                </Form.Group>
+              </Form.Row>
+              <Form.Row>
+                <Form.Group as={Col}>
+                  <InputGroup>
+                    <InputGroup.Prepend>
+                      <InputGroup.Text>
+                        <FontAwesomeIcon icon={faUser} />
+                      </InputGroup.Text>
+                    </InputGroup.Prepend>
+                    <FormControl
+                      autoComplete="off"
+                      type="text"
+                      name="lastName"
+                      value={lastName}
+                      onChange={this.userChange}
+                      className={"bg-dark text-white"}
+                      placeholder="Enter Last Name"
+                    />
+                  </InputGroup>
+                </Form.Group>
+              </Form.Row>
               <Form.Row>
                 <Form.Group as={Col}>
                   <InputGroup>
@@ -79,7 +126,7 @@ class Login extends Component {
                       type="text"
                       name="email"
                       value={email}
-                      onChange={this.credentialChange}
+                      onChange={this.userChange}
                       className={"bg-dark text-white"}
                       placeholder="Enter Email Address"
                     />
@@ -100,7 +147,7 @@ class Login extends Component {
                       type="password"
                       name="password"
                       value={password}
-                      onChange={this.credentialChange}
+                      onChange={this.userChange}
                       className={"bg-dark text-white"}
                       placeholder="Enter Password"
                     />
@@ -113,24 +160,19 @@ class Login extends Component {
                 size="sm"
                 type="button"
                 variant="success"
-                onClick={this.validateUser}
+                onClick={this.submitUser}
                 disabled={
                   this.state.email.length === 0 ||
                   this.state.password.length === 0
                 }
               >
-                <FontAwesomeIcon icon={faSignInAlt} /> Login
+                <FontAwesomeIcon icon={faUserPlus} /> Register
               </Button>{" "}
               <Button
                 size="sm"
                 type="button"
                 variant="info"
-                onClick={this.resetLoginForm}
-                disabled={
-                  this.state.email.length === 0 &&
-                  this.state.password.length === 0 &&
-                  this.state.error.length === 0
-                }
+                onClick={this.resetRegisterForm}
               >
                 <FontAwesomeIcon icon={faUndo} /> Reset
               </Button>
@@ -142,17 +184,4 @@ class Login extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    auth: state.auth,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    authenticateUser: (email, password) =>
-      dispatch(authenticateUser(email, password)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default Register;

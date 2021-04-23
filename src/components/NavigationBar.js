@@ -8,7 +8,7 @@ import {
   faSignInAlt,
   faSignOutAlt,
 } from "@fortawesome/free-solid-svg-icons";
-import { logoutUser } from "../services/index";
+import { logoutUser } from "../services/auth/index";
 
 class NavigationBar extends Component {
   logout = () => {

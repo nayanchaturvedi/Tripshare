@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import RegisterServices from "../../services/user/register/RegisterServices";
-
+import { connect } from "react-redux";
 import {
   Row,
   Col,
@@ -9,109 +8,64 @@ import {
   InputGroup,
   FormControl,
   Button,
+  Alert,
 } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faSignInAlt,
   faEnvelope,
   faLock,
   faUndo,
-  faUserPlus,
-  faUser,
 } from "@fortawesome/free-solid-svg-icons";
+import { authenticateUser } from "../services/auth/index";
 
-class Register extends Component {
+class Login extends Component {
   constructor(props) {
     super(props);
     this.state = this.initialState;
-
-    this.userChange = this.userChange.bind(this);
-    this.submitUser = this.submitUser.bind(this);
   }
 
   initialState = {
-    firstName: "",
-    lastName: "",
     email: "",
     password: "",
+    error: "",
   };
 
-  userChange = (event) => {
+  credentialChange = (event) => {
     this.setState({
       [event.target.name]: event.target.value,
     });
   };
 
-  resetRegisterForm = () => {
-    this.setState(() => this.initialState);
+  validateUser = () => {
+    this.props.authenticateUser(this.state.email, this.state.password);
+    setTimeout(() => {
+      if (this.props.auth.isLoggedIn) {
+        return this.props.history.push("/dashboard");
+      } else {
+        this.resetLoginForm();
+        this.setState({ error: "Invalid email and password" });
+      }
+    }, 500);
   };
 
-  submitUser(e) {
-    e.preventDefault();
-
-    let user = {
-      firstName: this.state.firstName,
-      lastName: this.state.lastName,
-      email: this.state.email,
-      password: this.state.password,
-    };
-    console.log("user => " + JSON.stringify(user));
-
-    RegisterServices.createUser(user).then((res) => {
-      this.props.history.push("/login");
-    });
-  }
+  resetLoginForm = () => {
+    this.setState(() => this.initialState);
+    localStorage.removeItem("jwtToken");
+  };
 
   render() {
-    const { firstName, email, password, lastName } = this.state;
+    const { email, password, error } = this.state;
 
     return (
       <Row className="justify-content-md-center">
         <Col xs={5}>
+          {error && <Alert variant="danger">{error}</Alert>}
           <Card className={"border border-dark bg-dark text-white"}>
             <Card.Header>
-              <FontAwesomeIcon icon={faUserPlus} /> Register
+              <FontAwesomeIcon icon={faSignInAlt} /> Login
             </Card.Header>
             <Card.Body>
-              <Form.Row>
-                <Form.Group as={Col}>
-                  <InputGroup>
-                    <InputGroup.Prepend>
-                      <InputGroup.Text>
-                        <FontAwesomeIcon icon={faUser} />
-                      </InputGroup.Text>
-                    </InputGroup.Prepend>
-                    <FormControl
-                      autoComplete="off"
-                      type="text"
-                      name="firstName"
-                      value={firstName}
-                      onChange={this.userChange}
-                      className={"bg-dark text-white"}
-                      placeholder="Enter First Name"
-                    />
-                  </InputGroup>
-                </Form.Group>
-              </Form.Row>
-              <Form.Row>
-                <Form.Group as={Col}>
-                  <InputGroup>
-                    <InputGroup.Prepend>
-                      <InputGroup.Text>
-                        <FontAwesomeIcon icon={faUser} />
-                      </InputGroup.Text>
-                    </InputGroup.Prepend>
-                    <FormControl
-                      autoComplete="off"
-                      type="text"
-                      name="lastName"
-                      value={lastName}
-                      onChange={this.userChange}
-                      className={"bg-dark text-white"}
-                      placeholder="Enter Last Name"
-                    />
-                  </InputGroup>
-                </Form.Group>
-              </Form.Row>
               <Form.Row>
                 <Form.Group as={Col}>
                   <InputGroup>
@@ -126,7 +80,7 @@ class Register extends Component {
                       type="text"
                       name="email"
                       value={email}
-                      onChange={this.userChange}
+                      onChange={this.credentialChange}
                       className={"bg-dark text-white"}
                       placeholder="Enter Email Address"
                     />
@@ -147,7 +101,7 @@ class Register extends Component {
                       type="password"
                       name="password"
                       value={password}
-                      onChange={this.userChange}
+                      onChange={this.credentialChange}
                       className={"bg-dark text-white"}
                       placeholder="Enter Password"
                     />
@@ -160,19 +114,24 @@ class Register extends Component {
                 size="sm"
                 type="button"
                 variant="success"
-                onClick={this.submitUser}
+                onClick={this.validateUser}
                 disabled={
                   this.state.email.length === 0 ||
                   this.state.password.length === 0
                 }
               >
-                <FontAwesomeIcon icon={faUserPlus} /> Register
+                <FontAwesomeIcon icon={faSignInAlt} /> Login
               </Button>{" "}
               <Button
                 size="sm"
                 type="button"
                 variant="info"
-                onClick={this.resetRegisterForm}
+                onClick={this.resetLoginForm}
+                disabled={
+                  this.state.email.length === 0 &&
+                  this.state.password.length === 0 &&
+                  this.state.error.length === 0
+                }
               >
                 <FontAwesomeIcon icon={faUndo} /> Reset
               </Button>
@@ -184,4 +143,17 @@ class Register extends Component {
   }
 }
 
-export default Register;
+const mapStateToProps = (state) => {
+  return {
+    auth: state.auth,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    authenticateUser: (email, password) =>
+      dispatch(authenticateUser(email, password)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
