@@ -10,6 +10,8 @@ import Register from "./components/Register";
 import Login from "./components/Login";
 import Footer from "./components/Footer";
 import Dashboard from "./components/Dashboard";
+import EditProfile from "./components/EditProfile";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function App() {
   const heading = "Welcome to TRIP SHARE";
@@ -24,17 +26,12 @@ export default function App() {
         <Row>
           <Col lg={12} className={"margin-top"}>
             <Switch>
-              <Route
-                path="/"
-                exact
-                component={() => (
-                  <Welcome heading={heading} quote={quote} footer={footer} />
-                )}
-              />
+              <Route path="/" exact component={Welcome} />
               <Route path="/register" exact component={Register} />
               <Route path="/login" exact component={Login} />
               <Route path="/logout" exact component={Login} />
               <Route path="/dashboard" exact component={Dashboard} />
+              <Route path="/editProfile" exact component={EditProfile} />
             </Switch>
           </Col>
         </Row>

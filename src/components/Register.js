@@ -123,7 +123,7 @@ class Register extends Component {
                     <FormControl
                       required
                       autoComplete="off"
-                      type="text"
+                      type="email"
                       name="email"
                       value={email}
                       onChange={this.userChange}

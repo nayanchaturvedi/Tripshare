@@ -4,17 +4,25 @@ class Dashboard extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      firstName: "S.",
-      lastName: "Jaishankar",
-      email: "fm@india.com",
-      password: "",
-      trips: [],
+      firstName: "",
+      lastName: "",
+      email: "",
+      dob: "",
+      description: "",
+      gender: "",
+      photoPath: "",
     };
+    this.editProfile = this.editProfile.bind(this);
   }
 
   componentDidMount() {
     this.findUserByUser();
   }
+
+  editProfile() {
+    return this.props.history.push("/editProfile");
+  }
+
   findUserByUser = () => {
     fetch("http://localhost:8085/user/getdetails", {
       method: "get",
@@ -30,12 +38,15 @@ class Dashboard extends Component {
           firstName: user.firstName,
           lastName: user.lastName,
           email: user.email,
+          gender: user.gender,
+          dob: user.dob,
+          description: user.description,
         });
       });
   };
 
   render() {
-    const { firstName, lastName, email } = this.state;
+    const { firstName, lastName, email, gender, description, dob } = this.state;
     return (
       <div className="container">
         <div className="main-body">
@@ -62,14 +73,17 @@ class Dashboard extends Component {
                     ></img>
                     <div className="mt-3">
                       <h4>{firstName}</h4>
-                      <p className="text-secondary mb-1">
-                        Full Stack Developer
-                      </p>
+                      <p className="text-secondary mb-1">{description}</p>
                       <p className="text-muted font-size-sm">Pilakua Haryana</p>
-                      <button className="btn btn-primary">Follow</button>
-                      <button className="btn btn-outline-primary">
-                        Message
+                      <button
+                        className="btn btn-primary"
+                        onClick={this.editProfile}
+                      >
+                        Edit Profile
                       </button>
+                      {/* <button className="btn btn-outline-primary">
+                        Message
+                      </button> */}
                     </div>
                   </div>
                 </div>
@@ -211,20 +225,16 @@ class Dashboard extends Component {
                   <hr></hr>
                   <div className="row">
                     <div className="col-sm-3">
-                      <h6 className="mb-0">Phone</h6>
+                      <h6 className="mb-0">Gender</h6>
                     </div>
-                    <div className="col-sm-9 text-secondary">
-                      (239) 816-9029
-                    </div>
+                    <div className="col-sm-9 text-secondary">{gender}</div>
                   </div>
                   <hr></hr>
                   <div className="row">
                     <div className="col-sm-3">
-                      <h6 className="mb-0">Mobile</h6>
+                      <h6 className="mb-0">Age</h6>
                     </div>
-                    <div className="col-sm-9 text-secondary">
-                      (320) 380-4539
-                    </div>
+                    <div className="col-sm-9 text-secondary">{dob}</div>
                   </div>
                   <hr></hr>
                   <div className="row">
