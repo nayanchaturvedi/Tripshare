@@ -54,7 +54,7 @@ class NavigationBar extends Component {
       <Navbar bg="dark" variant="dark">
         <Link to={""} className="navbar-brand">
           <img
-            src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Book_icon_1.png"
+            src="https://www.vhv.rs/dpng/d/450-4505042_trekking-png-hd-mountain-hiking-clip-art-transparent.png"
             width="25"
             height="25"
             alt="brand"

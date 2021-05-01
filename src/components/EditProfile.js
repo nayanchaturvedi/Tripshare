@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import EditServices from "../services/EditServices";
 
 //https://www.bootdey.com/snippets/view/account-setting-or-edit-profile#html
 
@@ -9,6 +10,7 @@ class EditProfile extends Component {
 
     this.userChange = this.userChange.bind(this);
     this.updteProfile = this.updteProfile.bind(this);
+    this.cancle = this.cancle.bind(this);
   }
 
   initialState = {
@@ -21,11 +23,42 @@ class EditProfile extends Component {
     password: "",
   };
 
+  componentDidMount() {
+    this.findUserByUser();
+  }
+
+  findUserByUser = () => {
+    fetch("http://localhost:8085/user/getdetails", {
+      method: "get",
+      headers: new Headers({
+        Authorization: localStorage.jwtToken,
+        "Content-Type": "application / json",
+      }),
+    })
+      .then((response) => response.json())
+      .then((user) => {
+        console.log(user);
+        this.setState({
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.email,
+          gender: user.gender,
+          dob: user.dob,
+          description: user.description,
+          password: user.password,
+        });
+      });
+  };
+
   userChange = (event) => {
     this.setState({
       [event.target.name]: event.target.value,
     });
   };
+
+  cancle() {
+    return this.props.history.push("/dashboard");
+  }
 
   updteProfile(e) {
     e.preventDefault();
@@ -41,27 +74,18 @@ class EditProfile extends Component {
     };
     console.log("updated user => " + JSON.stringify(updateUser));
 
-    fetch("http://localhost:8085/user/updatedetails", {
-      method: "post",
-      headers: new Headers({
-        Authorization: localStorage.jwtToken,
-        "Content-Type": "application / json",
-      }),
-      body: updateUser,
-    })
-      .then((response) => response.json())
-      .then((updatUser) => {
-        console.log(updatUser);
-        this.setState({
-          firstName: updatUser.firstName,
-          lastName: updatUser.lastName,
-          email: updatUser.email,
-          gender: updatUser.gender,
-          dob: updatUser.dob,
-          description: updatUser.description,
-          password: updateUser.password,
-        });
+    EditServices.saveUser(updateUser).then((response) => {
+      console.log(response.data);
+      this.setState({
+        firstName: updateUser.firstName,
+        lastName: updateUser.lastName,
+        email: updateUser.email,
+        gender: updateUser.gender,
+        dob: updateUser.dob,
+        description: updateUser.description,
+        password: updateUser.password,
       });
+    });
   }
 
   render() {
@@ -187,9 +211,9 @@ class EditProfile extends Component {
                           <option value="" defaultValue disabled hidden>
                             Choose Gender
                           </option>
-                          <option value="Male">Male</option>
-                          <option value="Female">Female</option>
-                          <option value="Others">Other</option>
+                          <option value="1">Male</option>
+                          <option value="2">Female</option>
+                          <option value="0">Other</option>
                         </select>
                       </div>
                     </div>
@@ -243,6 +267,7 @@ class EditProfile extends Component {
                           type="button"
                           id="submit"
                           name="submit"
+                          onClick={this.cancle}
                           className="btn btn-secondary"
                         >
                           Cancel

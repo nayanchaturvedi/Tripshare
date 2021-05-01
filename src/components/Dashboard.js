@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { Button } from "react-bootstrap";
+//import * from "../assets/css/"
 
 class Dashboard extends Component {
   constructor(props, context) {
@@ -13,6 +15,7 @@ class Dashboard extends Component {
       photoPath: "",
     };
     this.editProfile = this.editProfile.bind(this);
+    this.createTrip = this.createTrip.bind(this);
   }
 
   componentDidMount() {
@@ -28,7 +31,7 @@ class Dashboard extends Component {
       method: "get",
       headers: new Headers({
         Authorization: localStorage.jwtToken,
-        "Content-Type": "application / json",
+        "Content-Type": "application/json",
       }),
     })
       .then((response) => response.json())
@@ -43,7 +46,12 @@ class Dashboard extends Component {
           description: user.description,
         });
       });
+    return this.props.history.push("/dashboard");
   };
+
+  createTrip() {
+    return this.props.history.push("/createtrip");
+  }
 
   render() {
     const { firstName, lastName, email, gender, description, dob } = this.state;
@@ -90,7 +98,58 @@ class Dashboard extends Component {
               </div>
               <div className="card mt-3">
                 <ul className="list-group list-group-flush">
-                  <li className="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                  <li className="list-group-item text-center">
+                    <>
+                      <style type="text/css">
+                        {`
+                      .btn-flat {
+                        background-color: black;
+                        color: white;
+                      }
+
+                      .btn-xxl {
+                        left: 1rem;
+                        font-size: 1rem;
+                      }
+                      `}
+                      </style>
+                      <Button variant="flat" size="xxl">
+                        Edit Profile
+                      </Button>
+                    </>
+                  </li>
+                  <li className="list-group-item text-center">
+                    <>
+                      <Button
+                        variant="flat"
+                        size="xxl"
+                        onClick={this.createTrip}
+                      >
+                        Create Trip
+                      </Button>
+                    </>
+                  </li>
+                  <li className="list-group-item text-center">
+                    <>
+                      <style type="text/css">
+                        {`
+                      .btn-flat1 {
+                        background-color: red;
+                        color: white;
+                      }
+
+                      .btn-xxl1 {
+                        left: 1rem;
+                        font-size: 1rem;
+                      }
+                      `}
+                      </style>
+                      <Button variant="flat1" size="xxl1">
+                        Delete Acoount
+                      </Button>
+                    </>
+                  </li>
+                  {/* <li className="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                     <h6 className="mb-0">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -200,7 +259,7 @@ class Dashboard extends Component {
                       Facebook
                     </h6>
                     <span className="text-secondary">bootdey</span>
-                  </li>
+                  </li> */}
                 </ul>
               </div>
             </div>
@@ -232,7 +291,7 @@ class Dashboard extends Component {
                   <hr></hr>
                   <div className="row">
                     <div className="col-sm-3">
-                      <h6 className="mb-0">Age</h6>
+                      <h6 className="mb-0">Date of Birth</h6>
                     </div>
                     <div className="col-sm-9 text-secondary">{dob}</div>
                   </div>

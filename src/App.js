@@ -11,14 +11,11 @@ import Login from "./components/Login";
 import Footer from "./components/Footer";
 import Dashboard from "./components/Dashboard";
 import EditProfile from "./components/EditProfile";
+import CreateTrip from "./components/CreateTrip";
+import MatchTrips from "./components/MatchTrips";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function App() {
-  const heading = "Welcome to TRIP SHARE";
-  const quote =
-    "Good friends, good cars, and a footpath: this is the ideal life.";
-  const footer = "sallu bhai";
-
   return (
     <Router>
       <NavigationBar />
@@ -32,6 +29,8 @@ export default function App() {
               <Route path="/logout" exact component={Login} />
               <Route path="/dashboard" exact component={Dashboard} />
               <Route path="/editProfile" exact component={EditProfile} />
+              <Route path="/createtrip" exact component={CreateTrip} />
+              <Route path="/matchtrips/:tripId" exact component={MatchTrips} />
             </Switch>
           </Col>
         </Row>
