@@ -13,6 +13,7 @@ import Dashboard from "./components/Dashboard";
 import EditProfile from "./components/EditProfile";
 import CreateTrip from "./components/CreateTrip";
 import MatchTrips from "./components/MatchTrips";
+import NewMatch from "./components/NewMatch";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function App() {
@@ -31,6 +32,7 @@ export default function App() {
               <Route path="/editProfile" exact component={EditProfile} />
               <Route path="/createtrip" exact component={CreateTrip} />
               <Route path="/matchtrips/:tripId" exact component={MatchTrips} />
+              <Route path="/newmatch" exact component={NewMatch} />
             </Switch>
           </Col>
         </Row>

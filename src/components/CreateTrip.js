@@ -51,8 +51,8 @@ class CreateTrip extends Component {
   };
 
   test() {
-    var tripId = "4";
-    this.props.history.push(`/matchtrips/${tripId}`);
+    var tripId = "6";
+    this.props.history.push("/newmatch");
   }
 
   render() {
@@ -226,11 +226,7 @@ class CreateTrip extends Component {
                   </Form.Group> */}
                 </Card.Body>
                 <Card.Footer style={{ textAlign: "left" }}>
-                  <Button
-                    variant="primary"
-                    type="submit"
-                    onClick={this.submitTrip}
-                  >
+                  <Button variant="primary" type="submit" onClick={this.test}>
                     Find Me Some Fellow Travellers
                   </Button>
                 </Card.Footer>

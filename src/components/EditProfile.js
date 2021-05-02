@@ -111,13 +111,13 @@ class EditProfile extends Component {
                       <h5 className="user-name">Update Profile</h5>
                       {/* <h6 className="user-email">yuki@Maxwell.com</h6> */}
                     </div>
-                    <div className="about">
+                    {/* <div className="about">
                       <h5>About</h5>
                       <p>
                         I'm Yuki. Full Stack Designer I enjoy creating
                         user-centric, delightful and human experiences.
                       </p>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>

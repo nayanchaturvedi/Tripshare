@@ -82,12 +82,12 @@ class Dashboard extends Component {
                     <div className="mt-3">
                       <h4>{firstName}</h4>
                       <p className="text-secondary mb-1">{description}</p>
-                      <p className="text-muted font-size-sm">Pilakua Haryana</p>
+                      <p className="text-muted font-size-sm">Indore</p>
                       <button
                         className="btn btn-primary"
-                        onClick={this.editProfile}
+                        //onClick={this.editProfile}
                       >
-                        Edit Profile
+                        Edit Photo
                       </button>
                       {/* <button className="btn btn-outline-primary">
                         Message
@@ -113,7 +113,11 @@ class Dashboard extends Component {
                       }
                       `}
                       </style>
-                      <Button variant="flat" size="xxl">
+                      <Button
+                        variant="flat"
+                        size="xxl"
+                        onClick={this.editProfile}
+                      >
                         Edit Profile
                       </Button>
                     </>
@@ -300,9 +304,7 @@ class Dashboard extends Component {
                     <div className="col-sm-3">
                       <h6 className="mb-0">Address</h6>
                     </div>
-                    <div className="col-sm-9 text-secondary">
-                      Pilakua Haryana
-                    </div>
+                    <div className="col-sm-9 text-secondary">Indore, M.P.</div>
                   </div>
                 </div>
               </div>
@@ -312,11 +314,11 @@ class Dashboard extends Component {
                     <div className="card-body">
                       <h6 className="d-flex align-items-center mb-3">
                         <i className="material-icons text-info mr-2">
-                          Assignment
+                          Feedback
                         </i>
-                        Project Status
+                        Rating
                       </h6>
-                      <small>Web Design</small>
+                      <small>Behaviour</small>
                       <div className="progress mb-3" style={{ height: "5px" }}>
                         <div
                           className="progress-bar bg-primary"
@@ -327,7 +329,7 @@ class Dashboard extends Component {
                           aria-valuemax="100"
                         ></div>
                       </div>
-                      <small>Website Markup</small>
+                      <small>Friendly Nature</small>
                       <div className="progress mb-3" style={{ height: "5px" }}>
                         <div
                           className="progress-bar bg-primary"
@@ -338,35 +340,13 @@ class Dashboard extends Component {
                           aria-valuemax="100"
                         ></div>
                       </div>
-                      <small>One Page</small>
+                      <small>Coopretative</small>
                       <div className="progress mb-3" style={{ height: "5px" }}>
                         <div
                           className="progress-bar bg-primary"
                           role="progressbar"
                           style={{ width: "89%" }}
                           aria-valuenow="89"
-                          aria-valuemin="0"
-                          aria-valuemax="100"
-                        ></div>
-                      </div>
-                      <small>Mobile Template</small>
-                      <div className="progress mb-3" style={{ height: "5px" }}>
-                        <div
-                          className="progress-bar bg-primary"
-                          role="progressbar"
-                          style={{ width: "55%" }}
-                          aria-valuenow="55"
-                          aria-valuemin="0"
-                          aria-valuemax="100"
-                        ></div>
-                      </div>
-                      <small>Backend API</small>
-                      <div className="progress mb-3" style={{ height: "5px" }}>
-                        <div
-                          className="progress-bar bg-primary"
-                          role="progressbar"
-                          style={{ width: "66%" }}
-                          aria-valuenow="66"
                           aria-valuemin="0"
                           aria-valuemax="100"
                         ></div>
@@ -379,12 +359,11 @@ class Dashboard extends Component {
                     <div className="card-body">
                       <h6 className="d-flex align-items-center mb-3">
                         <i className="material-icons text-info mr-2">
-                          Assignment
+                          My Trips
                         </i>
-                        Project Status
                       </h6>
-                      <small>Web Design</small>
-                      <div className="progress mb-3" style={{ height: "5px" }}>
+                      <small>List of Trips</small>
+                      {/* <div className="progress mb-3" style={{ height: "5px" }}>
                         <div
                           className="progress-bar bg-primary"
                           role="progressbar"
@@ -437,7 +416,7 @@ class Dashboard extends Component {
                           aria-valuemin="0"
                           aria-valuemax="100"
                         ></div>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
