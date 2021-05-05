@@ -35,6 +35,11 @@ class Register extends Component {
     password: "",
   };
 
+  componentDidMount() {
+    localStorage.removeItem("newtripId");
+    localStorage.removeItem("jwtToken");
+  }
+
   userChange = (event) => {
     this.setState({
       [event.target.name]: event.target.value,

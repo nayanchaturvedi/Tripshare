@@ -11,38 +11,38 @@ class MatchTrips extends Component {
 
     this.state = {
       //tripId: this.props.match.params.tripId,
-      //tripId: "6",
-      trips: [
-        {
-          trip: {
-            firstName: "Ram",
-            tripDate: "2021/05/21",
-            destination: "Shimla",
-            tripId: 1,
-          },
-        },
-        {
-          trip: {
-            firstName: "shyam",
-            tripDate: "2021/05/21",
-            destination: "Mathura",
-            tripId: 2,
-          },
-        },
-      ],
+      tripId: "6",
+      // trips: [
+      //   {
+      //     trip: {
+      //       firstName: "Ram",
+      //       tripDate: "2021/05/21",
+      //       destination: "Shimla",
+      //       tripId: 1,
+      //     },
+      //   },
+      //   {
+      //     trip: {
+      //       firstName: "shyam",
+      //       tripDate: "2021/05/21",
+      //       destination: "Mathura",
+      //       tripId: 2,
+      //     },
+      //   },
+      // ],
     };
   }
 
-  // componentDidMount() {
-  //   console.log(this.state.tripId);
-  //   TripServices.GetmatchTrip(this.state.tripId).then((res) => {
-  //     console.log(res.data);
-  //     this.setState({
-  //       trips: res.data,
-  //     });
-  //     console.log(this.state.trips[0].trip.tripId);
-  //   });
-  // }
+  componentDidMount() {
+    console.log(this.state.tripId);
+    TripServices.GetmatchTrip(this.state.tripId).then((res) => {
+      console.log(res.data);
+      this.setState({
+        trips: res.data,
+      });
+      console.log(this.state.trips[0].trip.tripId);
+    });
+  }
   render() {
     const { trips } = this.state;
     return (
@@ -128,7 +128,7 @@ class MatchTrips extends Component {
               </tr>
             </thead>
             <tbody>
-              {this.state.trips.map((mtrip) => (
+              {trips.map((mtrip) => (
                 <tr key={mtrip.trip.tripId}>
                   <td> {mtrip.trip.firstName} </td>
                   <td> {mtrip.trip.tripDate}</td>

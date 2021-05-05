@@ -11,6 +11,7 @@ class EditProfile extends Component {
     this.userChange = this.userChange.bind(this);
     this.updteProfile = this.updteProfile.bind(this);
     this.cancle = this.cancle.bind(this);
+    localStorage.removeItem("newtripId");
   }
 
   initialState = {

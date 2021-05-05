@@ -32,6 +32,7 @@ export const logoutUser = () => {
       type: AT.LOGOUT_REQUEST,
     });
     localStorage.removeItem("jwtToken");
+    localStorage.removeItem("newtripId");
     dispatch(success(false));
   };
 };

@@ -21,6 +21,7 @@ class CreateTrip extends Component {
     this.userChange = this.userChange.bind(this);
     this.submitTrip = this.submitTrip.bind(this);
     this.test = this.test.bind(this);
+    localStorage.removeItem("newtripId");
   }
   userChange = (event) => {
     console.log(event.target.name + " => " + event.target.value);
@@ -45,13 +46,13 @@ class CreateTrip extends Component {
     console.log(trip);
     TripServices.saveTrip(trip).then((res) => {
       console.log(res.data.tripId);
-      var tripId = res.data.tripId;
-      this.props.history.push(`/matchtrips/${tripId}`);
+      var newtripId = res.data.tripId;
+      localStorage.setItem("tripId", newtripId);
+      this.props.history.push("/newMatch/");
     });
   };
 
   test() {
-    var tripId = "6";
     this.props.history.push("/newmatch");
   }
 
@@ -211,22 +212,13 @@ class CreateTrip extends Component {
                       onChange={this.userChange}
                     />
                   </Form.Group>
-
-                  {/* <Form.Group controlId="formGridDescription">
-                    <Form.Label>Description</Form.Label>
-                    <br></br>
-
-                    <textarea
-                      id="description"
-                      name="description"
-                      rows="3"
-                      cols="60"
-                      placeholder="Your expectations here..."
-                    ></textarea>
-                  </Form.Group> */}
                 </Card.Body>
                 <Card.Footer style={{ textAlign: "left" }}>
-                  <Button variant="primary" type="submit" onClick={this.test}>
+                  <Button
+                    variant="primary"
+                    type="submit"
+                    onClick={this.submitTrip}
+                  >
                     Find Me Some Fellow Travellers
                   </Button>
                 </Card.Footer>

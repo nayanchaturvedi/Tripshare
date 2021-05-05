@@ -44,6 +44,8 @@ class Login extends Component {
         return this.props.history.push("/dashboard");
       } else {
         this.resetLoginForm();
+        localStorage.removeItem("jwtToken");
+        console.log("hoooo");
         this.setState({ error: "Invalid email and password" });
       }
     }, 500);
@@ -52,6 +54,7 @@ class Login extends Component {
   resetLoginForm = () => {
     this.setState(() => this.initialState);
     localStorage.removeItem("jwtToken");
+    localStorage.removeItem("newtripId");
   };
 
   render() {

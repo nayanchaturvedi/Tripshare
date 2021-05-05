@@ -32,14 +32,14 @@ class NavigationBar extends Component {
     const userLinks = (
       <>
         <Nav className="mr-auto">
-          <Link to={"add"} className="nav-link">
+          <Link to={"createTrip"} className="nav-link">
             Create Trip
           </Link>
           <Link to={"list"} className="nav-link">
             Trip List
           </Link>
-          <Link to={"users"} className="nav-link">
-            Edit Profile
+          <Link to={"dashboard"} className="nav-link">
+            My Profile
           </Link>
         </Nav>
         <Nav className="navbar-right">
