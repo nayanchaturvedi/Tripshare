@@ -48,13 +48,9 @@ class CreateTrip extends Component {
       console.log(res.data.tripId);
       var newtripId = res.data.tripId;
       localStorage.setItem("tripId", newtripId);
-      this.props.history.push("/newMatch/");
+      this.props.history.push("/newMatch");
     });
   };
-
-  test() {
-    this.props.history.push("/newmatch");
-  }
 
   render() {
     const {

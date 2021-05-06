@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Button } from "react-bootstrap";
+
 //import * from "../assets/css/"
 
 class Dashboard extends Component {
@@ -12,17 +13,21 @@ class Dashboard extends Component {
       dob: "",
       description: "",
       gender: "",
-      photoPath: "https://bootdey.com/img/Content/avatar/avatar7.png",
+      photoPath: null,
+      trip: null,
+      test: "",
     };
     this.editProfile = this.editProfile.bind(this);
     this.createTrip = this.createTrip.bind(this);
     this.deleteProfile = this.deleteProfile.bind(this);
     this.changePhoto = this.changePhoto.bind(this);
+    this.myTrips = this.myTrips.bind(this);
     localStorage.removeItem("newtripId");
   }
 
   componentDidMount() {
     this.findUserByUser();
+    this.findTripsByUser();
   }
 
   editProfile() {
@@ -44,16 +49,40 @@ class Dashboard extends Component {
           firstName: user.firstName,
           lastName: user.lastName,
           email: user.email,
-          gender: user.gender,
+
           dob: user.dob,
           description: user.description,
+          photoPath: user.photoPath,
         });
-        if (user.photoPath !== "")
-          this.setState({
-            photoPath: user.photoPath,
-          });
+
+        if (user.gender === 1) {
+          this.setState({ gender: "Male" });
+        } else if (user.gender === 0) {
+          this.setState({ gender: "Other" });
+        } else {
+          this.setState({ gender: "Female" });
+        }
       });
-    return this.props.history.push("/dashboard");
+    // return this.props.history.push("/dashboard");
+  };
+
+  findTripsByUser = () => {
+    fetch("http://localhost:8085/user/gettrips", {
+      method: "get",
+      headers: new Headers({
+        Authorization: localStorage.jwtToken,
+        "Content-Type": "application/json",
+      }),
+    })
+      .then((response) => response.json())
+      .then((trips) => {
+        console.log(trips[0]);
+        this.setState({
+          trip: trips[0],
+          test: trips.length,
+        });
+        console.log(this.state.test);
+      });
   };
 
   createTrip() {
@@ -63,7 +92,9 @@ class Dashboard extends Component {
   deleteProfile() {
     return this.props.history.push("/deleteProfile");
   }
-
+  myTrips() {
+    return this.props.history.push("/myTrips");
+  }
   changePhoto() {
     localStorage.setItem("photoPath", this.state.photoPath);
     return this.props.history.push("/changePhoto");
@@ -77,45 +108,81 @@ class Dashboard extends Component {
       description,
       dob,
       photoPath,
+      trip,
+      test,
     } = this.state;
+
+    const isPhoto = photoPath === null;
+    let yaar;
+
+    if (!test) {
+      yaar = (
+        <div className="text-white text-center bg-info block-example border border-danger w-100 p-2">
+          There are no previous trips to display.
+          <br /> Click on Create Trip Button to create new. trips.
+        </div>
+      );
+    } else {
+      yaar = (
+        <div>
+          <i>Latest Trip</i>
+          <div className="text-dark block-example border border-info w-100 p-2">
+            <small>
+              Description:{trip.description}
+              <br />
+              Location: {trip.destination}
+              {" | "}
+              Budget: {trip.tripBudget}
+              <br />
+              Group Size: {trip.groupSize}
+              {" | "}
+              Date: {trip.tripDate}
+            </small>
+          </div>
+          <small>To see all the information click on button below...</small>
+          <br />
+          <Button className="text-center" onClick={this.myTrips}>
+            {" "}
+            view all
+          </Button>
+        </div>
+      );
+    }
 
     return (
       <div className="container">
         <div className="main-body">
-          {/* <nav aria-label="breadcrumb" className="main-breadcrumb">
-            <ol className="breadcrumb">
-              <li className="breadcrumb-item">Home</li>
-              <li className="breadcrumb-item">User</li>
-              <li className="breadcrumb-item active" aria-current="page">
-                User Profile
-              </li>
-            </ol>
-          </nav> */}
-
           <div className="row gutters-sm">
             <div className="col-md-4 mb-3">
               <div className="card">
                 <div className="card-body">
                   <div className="d-flex flex-column align-items-center text-center">
-                    <img
-                      src={photoPath}
-                      alt="Admin"
-                      className="rounded-circle"
-                      width="150"
-                    ></img>
+                    {isPhoto ? (
+                      <img
+                        src="https://i2-prod.manchestereveningnews.co.uk/sport/football/football-news/article18186890.ece/ALTERNATES/s1200c/2_GettyImages-1184489344.jpg"
+                        alt="Admin"
+                        className="rounded-circle"
+                        width="150"
+                      ></img>
+                    ) : (
+                      <img
+                        src="https://bootdey.com/img/Content/avatar/avatar7.png"
+                        alt="No photo to preview"
+                        className="rounded-circle"
+                        width="150"
+                      ></img>
+                    )}
+
                     <div className="mt-3">
-                      <h4>{firstName}</h4>
-                      <p className="text-secondary mb-1">{description}</p>
-                      <p className="text-muted font-size-sm">Indore</p>
+                      <h4>{firstName + " " + lastName}</h4>
+                      <p className="text-secondary mb-3">{description}</p>
+
                       <button
                         className="btn btn-primary"
                         onClick={this.changePhoto}
                       >
                         Change Photo
                       </button>
-                      {/* <button className="btn btn-outline-primary">
-                        Message
-                      </button> */}
                     </div>
                   </div>
                 </div>
@@ -217,12 +284,12 @@ class Dashboard extends Component {
                     <div className="col-sm-9 text-secondary">{dob}</div>
                   </div>
                   <hr></hr>
-                  <div className="row">
+                  {/* <div className="row">
                     <div className="col-sm-3">
                       <h6 className="mb-0">Address</h6>
                     </div>
                     <div className="col-sm-9 text-secondary">Indore, M.P.</div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
               <div className="row gutters-sm">
@@ -279,7 +346,7 @@ class Dashboard extends Component {
                           My Trips
                         </i>
                       </h6>
-                      <small>List of Trips</small>
+                      {yaar}
                     </div>
                   </div>
                 </div>
