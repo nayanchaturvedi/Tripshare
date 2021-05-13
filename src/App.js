@@ -15,6 +15,8 @@ import CreateTrip from "./components/CreateTrip";
 import NewMatch from "./components/NewMatch";
 import DeleteProfile from "./components/DeleteProfile";
 import ChangePhoto from "./components/ChangePhoto";
+import ChatUI from "./components/ChatUI";
+
 import MyTrips from "./components/MyTrips";
 import AboutUs from "./components/AboutUs";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -35,6 +37,7 @@ export default function App() {
               <Route path="/createtrip" exact component={CreateTrip} />
               <Route path="/newMatch" exact component={NewMatch} />
               <Route path="/deleteProfile" exact component={DeleteProfile} />
+              <Route path="/chatUi/:id" exact component={ChatUI} />
               <Route path="/changePhoto" exact component={ChangePhoto} />
               <Route path="/myTrips" exact component={MyTrips} />
               <Route path="/aboutUs" exact component={AboutUs} />

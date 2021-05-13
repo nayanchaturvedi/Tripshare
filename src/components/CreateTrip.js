@@ -20,11 +20,11 @@ class CreateTrip extends Component {
     };
     this.userChange = this.userChange.bind(this);
     this.submitTrip = this.submitTrip.bind(this);
-    this.test = this.test.bind(this);
+
     localStorage.removeItem("newtripId");
   }
   userChange = (event) => {
-    console.log(event.target.name + " => " + event.target.value);
+    // console.log(event.target.name + " => " + event.target.value);
     this.setState({
       [event.target.name]: event.target.value,
     });

@@ -2,7 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="297decb2-7250-4018-b756-0acb82b42063" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/images/683994.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.cache/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.cache/.eslintcache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/css/Style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/css/Style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ChangePhoto.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ChangePhoto.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/CreateTrip.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/CreateTrip.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Dashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/UserTableRow.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/UserTableRow.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/EditServices.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/EditServices.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,6 +57,8 @@
       <workItem from="1619186646643" duration="45000" />
       <workItem from="1619297529469" duration="35000" />
       <workItem from="1619858989095" duration="27000" />
+      <workItem from="1620844129564" duration="11000" />
+      <workItem from="1620926018091" duration="26000" />
     </task>
     <servers />
   </component>

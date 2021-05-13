@@ -7,6 +7,7 @@ class Dashboard extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
+      id: "",
       firstName: "",
       lastName: "",
       email: "",
@@ -22,12 +23,14 @@ class Dashboard extends Component {
     this.deleteProfile = this.deleteProfile.bind(this);
     this.changePhoto = this.changePhoto.bind(this);
     this.myTrips = this.myTrips.bind(this);
+    this.myChats = this.myChats.bind(this);
     localStorage.removeItem("newtripId");
   }
 
   componentDidMount() {
     this.findUserByUser();
     this.findTripsByUser();
+    this.getChatUsers();
   }
 
   editProfile() {
@@ -46,6 +49,7 @@ class Dashboard extends Component {
       .then((user) => {
         console.log(user);
         this.setState({
+          id: user.id,
           firstName: user.firstName,
           lastName: user.lastName,
           email: user.email,
@@ -54,6 +58,8 @@ class Dashboard extends Component {
           description: user.description,
           photoPath: user.photoPath,
         });
+        //         http://localhost:8085/userphotos/ + photopath
+        // get
 
         if (user.gender === 1) {
           this.setState({ gender: "Male" });
@@ -85,6 +91,23 @@ class Dashboard extends Component {
       });
   };
 
+  getChatUsers = () => {
+    fetch("http://localhost:8085/user/getchatslist", {
+      method: "get",
+      headers: new Headers({
+        Authorization: localStorage.jwtToken,
+        "Content-Type": "application/json",
+      }),
+    })
+      .then((response) => response.json())
+      .then((chatUsers) => {
+        console.log(chatUsers);
+        this.setState({
+          firstChatUser: chatUsers[0],
+        });
+      });
+  };
+
   createTrip() {
     return this.props.history.push("/createtrip");
   }
@@ -94,6 +117,9 @@ class Dashboard extends Component {
   }
   myTrips() {
     return this.props.history.push("/myTrips");
+  }
+  myChats() {
+    return this.props.history.push("/chatUi/" + this.state.id);
   }
   changePhoto() {
     localStorage.setItem("photoPath", this.state.photoPath);
@@ -109,6 +135,7 @@ class Dashboard extends Component {
       dob,
       photoPath,
       trip,
+      firstChatUser,
       test,
     } = this.state;
 
@@ -149,6 +176,34 @@ class Dashboard extends Component {
       );
     }
 
+    let chatUserDisplay;
+    if (!firstChatUser) {
+      chatUserDisplay = (
+        <div className="text-white text-center bg-info block-example border border-danger w-100 p-2">
+          There are no messages.
+        </div>
+      );
+    } else {
+      chatUserDisplay = (
+        <div>
+          <i>You have a message from:</i>
+          <br></br>
+          <div className="text-dark block-example border border-info w-100 p-2">
+            <small>
+              <li>
+                {firstChatUser.firstName} {firstChatUser.lastName}
+              </li>
+            </small>
+          </div>
+          <br />
+          <Button size="sm" className="text-center" onClick={this.myChats}>
+            {" "}
+            View other messages
+          </Button>
+        </div>
+      );
+    }
+
     return (
       <div className="container">
         <div className="main-body">
@@ -159,15 +214,15 @@ class Dashboard extends Component {
                   <div className="d-flex flex-column align-items-center text-center">
                     {isPhoto ? (
                       <img
-                        src="https://i2-prod.manchestereveningnews.co.uk/sport/football/football-news/article18186890.ece/ALTERNATES/s1200c/2_GettyImages-1184489344.jpg"
+                        src="https://bootdey.com/img/Content/avatar/avatar7.png"
                         alt="Admin"
                         className="rounded-circle"
                         width="150"
                       ></img>
                     ) : (
                       <img
-                        src="https://bootdey.com/img/Content/avatar/avatar7.png"
-                        alt="No photo to preview"
+                        src={`http://localhost:8085/userphotos/` + photoPath}
+                        alt="No preview"
                         className="rounded-circle"
                         width="150"
                       ></img>
@@ -298,43 +353,10 @@ class Dashboard extends Component {
                     <div className="card-body">
                       <h6 className="d-flex align-items-center mb-3">
                         <i className="material-icons text-info mr-2">
-                          Feedback
+                          Chat Messages
                         </i>
-                        Rating
                       </h6>
-                      <small>Behaviour</small>
-                      <div className="progress mb-3" style={{ height: "5px" }}>
-                        <div
-                          className="progress-bar bg-primary"
-                          role="progressbar"
-                          style={{ width: "80%" }}
-                          aria-valuenow="80"
-                          aria-valuemin="0"
-                          aria-valuemax="100"
-                        ></div>
-                      </div>
-                      <small>Friendly Nature</small>
-                      <div className="progress mb-3" style={{ height: "5px" }}>
-                        <div
-                          className="progress-bar bg-primary"
-                          role="progressbar"
-                          style={{ width: "72%" }}
-                          aria-valuenow="72"
-                          aria-valuemin="0"
-                          aria-valuemax="100"
-                        ></div>
-                      </div>
-                      <small>Coopretative</small>
-                      <div className="progress mb-3" style={{ height: "5px" }}>
-                        <div
-                          className="progress-bar bg-primary"
-                          role="progressbar"
-                          style={{ width: "89%" }}
-                          aria-valuenow="89"
-                          aria-valuemin="0"
-                          aria-valuemax="100"
-                        ></div>
-                      </div>
+                      {chatUserDisplay}
                     </div>
                   </div>
                 </div>

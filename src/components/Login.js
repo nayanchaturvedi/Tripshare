@@ -39,15 +39,24 @@ class Login extends Component {
 
   validateUser = () => {
     this.props.authenticateUser(this.state.email, this.state.password);
-    setTimeout(() => {
-      if (this.props.auth.isLoggedIn) {
-        return this.props.history.push("/dashboard");
-      } else {
-        this.resetLoginForm();
-        localStorage.removeItem("jwtToken");
-        this.setState({ error: "Invalid email and password" });
-      }
-    }, 500);
+    console.log("1");
+
+    // const date = Date.now();
+    // let currentDate = null;
+    // console.log("2");
+    // do {
+    //   currentDate = Date.now();
+    // } while (currentDate - date < 10000);
+
+    if (this.props.auth.isLoggedIn) {
+      console.log("3");
+      return this.props.history.push("/dashboard");
+    } else {
+      console.log("4");
+      this.resetLoginForm();
+      localStorage.removeItem("jwtToken");
+      this.setState({ error: "Invalid email and password" });
+    }
   };
 
   resetLoginForm = () => {
