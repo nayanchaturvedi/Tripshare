@@ -17,6 +17,7 @@ class Dashboard extends Component {
       photoPath: null,
       trip: null,
       test: "",
+      firstChatUser: null,
     };
     this.editProfile = this.editProfile.bind(this);
     this.createTrip = this.createTrip.bind(this);
@@ -58,18 +59,15 @@ class Dashboard extends Component {
           description: user.description,
           photoPath: user.photoPath,
         });
-        //         http://localhost:8085/userphotos/ + photopath
-        // get
 
         if (user.gender === 1) {
           this.setState({ gender: "Male" });
         } else if (user.gender === 0) {
           this.setState({ gender: "Other" });
-        } else {
+        } else if (user.gender === 2) {
           this.setState({ gender: "Female" });
         }
       });
-    // return this.props.history.push("/dashboard");
   };
 
   findTripsByUser = () => {
@@ -215,7 +213,7 @@ class Dashboard extends Component {
                     {isPhoto ? (
                       <img
                         src="https://bootdey.com/img/Content/avatar/avatar7.png"
-                        alt="Admin"
+                        alt="No path"
                         className="rounded-circle"
                         width="150"
                       ></img>
@@ -275,7 +273,7 @@ class Dashboard extends Component {
                         size="xxl1"
                         onClick={this.createTrip}
                       >
-                        Create Trip
+                        Trip Preferences
                       </Button>
                     </>
                   </li>

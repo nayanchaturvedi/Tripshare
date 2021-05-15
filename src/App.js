@@ -8,7 +8,6 @@ import NavigationBar from "./components/NavigationBar";
 import Welcome from "./components/Welcome";
 import Register from "./components/Register";
 import Login from "./components/Login";
-import Footer from "./components/Footer";
 import Dashboard from "./components/Dashboard";
 import EditProfile from "./components/EditProfile";
 import CreateTrip from "./components/CreateTrip";
@@ -37,15 +36,14 @@ export default function App() {
               <Route path="/createtrip" exact component={CreateTrip} />
               <Route path="/newMatch" exact component={NewMatch} />
               <Route path="/deleteProfile" exact component={DeleteProfile} />
-              <Route path="/chatUi/:id" exact component={ChatUI} />
               <Route path="/changePhoto" exact component={ChangePhoto} />
+              <Route path="/chatUi/:id" exact component={ChatUI} />
               <Route path="/myTrips" exact component={MyTrips} />
               <Route path="/aboutUs" exact component={AboutUs} />
             </Switch>
           </Col>
         </Row>
       </Container>
-      <Footer />
     </Router>
   );
 }
