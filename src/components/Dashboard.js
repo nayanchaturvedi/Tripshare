@@ -203,7 +203,7 @@ class Dashboard extends Component {
     }
 
     return (
-      <div className="container">
+      <div className="container mt-5">
         <div className="main-body">
           <div className="row gutters-sm">
             <div className="col-md-4 mb-3">
@@ -246,11 +246,14 @@ class Dashboard extends Component {
                     <>
                       <style type="text/css">
                         {`
-                      .btn-flat {
-                        background-color: black;
+                      .editProfile {
+                        background-color: #1E90FF ;
                         color: white;
                       }
-
+                      .createTrip {
+                        background-color: grey;
+                        color: white;
+                      }
                       .btn-xxl {
                         left: 1rem;
                         font-size: 1rem;
@@ -258,6 +261,7 @@ class Dashboard extends Component {
                       `}
                       </style>
                       <Button
+                        className="editProfile"
                         variant="flat"
                         size="xxl1"
                         onClick={this.editProfile}
@@ -269,6 +273,7 @@ class Dashboard extends Component {
                   <li className="list-group-item text-center">
                     <>
                       <Button
+                        className="createTrip"
                         variant="flat"
                         size="xxl1"
                         onClick={this.createTrip}
@@ -282,10 +287,9 @@ class Dashboard extends Component {
                       <style type="text/css">
                         {`
                       .btn-flat1 {
-                        background-color: red;
+                        background-color: #B22222;
                         color: white;
                       }
-
                       .btn-xxl1 {
                         left: 1rem;
                         font-size: 1rem;

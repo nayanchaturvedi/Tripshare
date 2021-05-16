@@ -56,14 +56,22 @@ class ChatUI extends Component {
       chatMessages: [],
       // chatMessages: [
       //   {
-      //     fromUser: "4",
-      //     toUser: "3",
+      //     fromUser: {
+      //       id: "4",
+      //     },
+      //     toUser: {
+      //       id: "3",
+      //     },
       //     message: "Hey!",
       //     msgTimestamp: "1",
       //   },
       //   {
-      //     fromUser: "3",
-      //     toUser: "4",
+      //     fromUser: {
+      //       id: "3",
+      //     },
+      //     toUser: {
+      //       id: "4",
+      //     },
       //     message: "Hi!",
       //     msgTimestamp: "2",
       //   },
@@ -149,7 +157,7 @@ class ChatUI extends Component {
 
   sendMsg = (e) => {
     e.preventDefault();
-    if (this.state.messageobj.message === "") {
+    if (this.state.messageobj.message == "") {
       return;
     }
     let messageobj = {
@@ -226,7 +234,7 @@ class ChatUI extends Component {
                     </div>
                     {chatMessages.map((chatMessage) => (
                       <div key={chatMessage.msgTimestamp}>
-                        {this.state.currUserId === chatMessage.fromUser.id ? (
+                        {this.state.currUserId == chatMessage.fromUser.id ? (
                           <div className="row">
                             {" "}
                             <div className="col-6"> </div>
